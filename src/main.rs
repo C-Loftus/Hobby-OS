@@ -13,10 +13,8 @@ use hobby_os::println;
 pub extern "C" fn _start() -> ! {
     println!("Hello World{}", "!");
 
-    hobby_os::init(); // new
+    hobby_os::init(); 
 
-    // invoke a breakpoint exception
-    x86_64::instructions::interrupts::int3(); // new
     
     #[cfg(test)]
     test_main();

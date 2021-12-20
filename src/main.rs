@@ -5,23 +5,23 @@
 #![reexport_test_harness_main = "test_main"]
 
 use core::panic::PanicInfo;
-use hobby_os::println;
+use hobby_os::{println, print};
 
-// at cpu exceptions
+// at keyboard input
 
 #[no_mangle]
 pub extern "C" fn _start() -> ! {
     println!("Hello World{}", "!");
 
     hobby_os::init(); 
-
+    // let f= hobby_os::graphics::farbfeld::new();
+    // f.unwrap().display();
+    // hobby_os::graphics::hello_world_graphics();
     
     #[cfg(test)]
     test_main();
     println!("It did not crash!");
-    hello_world_graphics();
-    loop {
-    }
+    hobby_os::hlt_loop();            
 }
 
 /// This function is called on panic.
@@ -29,7 +29,7 @@ pub extern "C" fn _start() -> ! {
 #[panic_handler]
 fn panic(info: &PanicInfo) -> ! {
     println!("{}", info);
-    loop {}
+    hobby_os::hlt_loop();            
 }
 
 #[cfg(test)]
@@ -39,19 +39,3 @@ fn panic(info: &PanicInfo) -> ! {
 }
 
 
-pub fn hello_world_graphics() -> () {
-    use vga::colors::Color16;
-    use vga::writers::{Graphics640x480x16, GraphicsWriter};
-
-    let mode = Graphics640x480x16::new();
-    mode.set_mode();
-    mode.clear_screen(Color16::Black);
-    mode.draw_line((80, 60), (80, 420), Color16::White);
-    mode.draw_line((80, 60), (540, 60), Color16::White);
-    mode.draw_line((80, 420), (540, 420), Color16::White);
-    mode.draw_line((540, 420), (540, 60), Color16::White);
-    mode.draw_line((80, 90), (540, 90), Color16::White);
-    for (offset, character) in "Hello World!".chars().enumerate() {
-        mode.draw_character(270 + offset * 8, 72, character, Color16::White)
-    }
-}

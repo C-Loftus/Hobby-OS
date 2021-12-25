@@ -32,23 +32,23 @@ pub struct farbfeld<'a> {
     pub pixels: &'a[u8; 37136]
 }
 impl farbfeld<'_> {
-    pub fn new () -> Option<farbfeld<'static>> {
+    // pub fn new () -> Option<farbfeld<'static>> {
 
-        let p = include_bytes!("../tests/h.ff");
+    //     let p = include_bytes!("../tests/test.ff");
 
-        let head = &p;
-        if &head[..8] != b"farbfeld" {
-             return None;
-        }
+    //     let head = &p;
+    //     if &head[..8] != b"farbfeld" {
+    //          return None;
+    //     }
 
-        Some (
-            farbfeld {
-            width : as_u32_be(&head[8..12]) as usize,
-            height: as_u32_be(&head[12..16]) as usize, 
-            pixels: p
-            }
-        )
-    }
+    //     Some (
+    //         farbfeld {
+    //         width : as_u32_be(&head[8..12]) as usize,
+    //         height: as_u32_be(&head[12..16]) as usize, 
+    //         pixels: p
+    //         }
+    //     )
+    // }
     pub fn display(&self) -> () {
         use core::convert::TryInto;
         let mode = Graphics320x200x256::new();

@@ -1,12 +1,9 @@
-use core::char::ParseCharError;
-use core::fmt::{Result, Error};
-use core::num::IntErrorKind;
-use core::result;
-use vga::drawing;
+#![allow(dead_code)]
+#![allow(unused_variables)]
+// use core::fmt::{Result, Error};
+// use core::result;
 use vga::colors::Color16;
 use vga::writers::{Graphics640x480x16, GraphicsWriter, Graphics320x200x256};
-
-use crate::vga_buffer::Color;
 
 pub fn hello_world_graphics() -> () {
 
@@ -26,12 +23,12 @@ pub fn hello_world_graphics() -> () {
 }
 const HEADER_LEN: usize = 8+4+4;
 const MAGIC_VALUE: &[u8; 8] = b"farbfeld";
-pub struct farbfeld<'a> {
+pub struct Farbfeld<'a> {
     pub width: usize,
     pub height: usize,
     pub pixels: &'a[u8; 37136]
 }
-impl farbfeld<'_> {
+impl Farbfeld<'_> {
     // pub fn new () -> Option<farbfeld<'static>> {
 
     //     let p = include_bytes!("../tests/test.ff");
